@@ -31,6 +31,10 @@ def expand_dataframe_by_offices(df):
         .drop("variable", axis = 1)
     return df
 
+def drop_nulloffices(df):
+    df.dropna(subset= ['offices'])
+    return df
+
 
 def get_lat(x): 
     # Get latitude for a given office object
@@ -58,8 +62,11 @@ def add_geopoint_to_df(df):
     return df
 
 def get_amouts_raised(funding_round):
+    # creates a list of the values raised in every round for a company
     return [x.get('raised_amount') for x in funding_round]
 
 def add_raised_to_df(df):
+    # Add a column of the raised amounts
     df['Raised']=df.funding_rounds.apply(get_amouts_raised)
     return df
+
