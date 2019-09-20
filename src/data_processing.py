@@ -56,17 +56,21 @@ def geopoint(office):
     # Creates a geopoint object from an give office
     return {"type": "Point", "coordinates": [get_lon(office),get_lat(office)]}
 
-def add_geopoint_to_df(df):
-    # Adds a geopoints column to a Dataframe.
-    df['geo']= df.offices.apply(geopoint)
-    return df
 
 def get_amouts_raised(funding_round):
     # creates a list of the values raised in every round for a company
     return [x.get('raised_amount') for x in funding_round]
 
-def add_raised_to_df(df):
-    # Add a column of the raised amounts
-    df['Raised']=df.funding_rounds.apply(get_amouts_raised)
-    return df
 
+def get_city(office):
+    try:
+        return office['city']
+    except:
+        return None
+
+def enrich_df(df):
+    df['City'] = dfq.offices.apply(get_city)
+    df['geo']= df.offices.apply(geopoint)
+    df['Raised']=df.funding_rounds.apply(get_amouts_raised)
+
+    return df
