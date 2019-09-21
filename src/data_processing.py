@@ -112,7 +112,8 @@ def clean_bad_companies(df):
 
 def get_lisf_of_cities(df):
     subdf = df.groupby(['City']).agg({'name':"count"}) 
-    df.sort_values(by="name", ascending=False)
+    subdf = subdf.sort_values(by="name", ascending=False)
+    return list(subdf.index)[:6] 
 
 
 '''

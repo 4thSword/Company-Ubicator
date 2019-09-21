@@ -1,7 +1,9 @@
 
 def print_cities(lst):
-    for i in enumerates(lst):
-        yield '{}.- {}'.format(i[0],i[1])
+    lista = ''''''
+    for i in enumerate(lst):
+         lista +='{}.- {}\n\n\t'.format(i[0],i[1])
+    return lista
 
 def display_main_menu(goodcities,badcities):
     print('''
@@ -25,6 +27,7 @@ def display_main_menu(goodcities,badcities):
     ----------------------------------------------------------------------------------------------
     - The cities with more Tech companies that raised more than 1M dollar are :                  -
     ----------------------------------------------------------------------------------------------
+        
         {}
     ----------------------------------------------------------------------------------------------
     - The cities with more VideoGames companies that have more than 10 years are :               -
