@@ -1,6 +1,9 @@
+# Import libraries
 from pymongo import MongoClient
 import pandas as pd
 import re
+
+# Functios Definitions
 
 def database_connection():
     # Creates a connection to our local database
@@ -12,6 +15,11 @@ def get_developers_request(db):
     regx = re.compile('\^?tech\w?',re.IGNORECASE)
     devreq = db.companies.find({"tag_list" : regx})
     return pd.DataFrame(devreq)
+
+def get_bad_comapnies(db):
+    # Returns a 
+    bad = db.companies.find({'category_code': 'games_video' ,'founded_year': {'$lte':2009}})
+    return pd.DataFrame(bad)
 
 def expand_dataframe_by_offices(df):
     # Expand a dataframe to get one row per office.
@@ -30,6 +38,8 @@ def expand_dataframe_by_offices(df):
            'twitter_username', 'updated_at', 'video_embeds'], value_name = "offices") \
         .drop("variable", axis = 1)
     return df
+
+
 
 def drop_nulloffices(df):
     df.dropna(subset= ['offices'])
@@ -61,6 +71,17 @@ def get_amouts_raised(funding_round):
     # creates a list of the values raised in every round for a company
     return [x.get('raised_amount') for x in funding_round]
 
+def drop_Raised_nones(lst):
+    for element in lst:
+        if element == None:
+            lst.remove(element)
+    return lst
+
+def create_total_raised(lst):
+    try:
+        return sum(lst)
+    except:
+        return 0
 
 def get_city(office):
     try:
@@ -68,11 +89,39 @@ def get_city(office):
     except:
         return None
 
-def enrich_df(df):
-    df['City'] = dfq.offices.apply(get_city)
+
+
+def first_clean_good_companies(df):
+    #get the data from Mongo db and start a first filtering:
+    df = expand_dataframe_by_offices(df)
+    df['raised'] = df.funding_rounds.apply(get_amouts_raised)
+    df.raised.apply(drop_Raised_nones)
+    df['total_raised'] = df.raised.apply(create_total_raised)
+    df = df[df['total_raised']>= 1000000]
+    df = df[['name','category_code','total_raised','offices']]
+    df = drop_nulloffices(df)
+    df['City'] = df.offices.apply(get_city)
+    df = df[df['City']!= ""]
     df['geo'] = df.offices.apply(geopoint)
     df['longitude'] = df.offices.apply(get_lon)
     df['latitude'] = df.offices.apply(get_lat)
-    df['Raised'] = df.funding_rounds.apply(get_amouts_raised)
-
     return df
+
+def get_lisf_of_cities(df):
+    subdf = df.groupby(['City']).agg({'name':"count"}) 
+    df.sort_values(by="name", ascending=False)
+
+
+'''
+def enrich_df(df):
+    df = expand_dataframe_by_offices(df)
+    df = drop_nulloffices(df)
+    df['City'] = df.offices.apply(get_city)
+    df['geo'] = df.offices.apply(geopoint)
+    df['longitude'] = df.offices.apply(get_lon)
+    df['latitude'] = df.offices.apply(get_lat)
+    df['raised'] = df.funding_rounds.apply(get_amouts_raised)
+    df.raised.apply(drop_Raised_nones)
+    df['total_raised'] = df.Raised.apply(create_total_raised)
+    return df[['name',]]'''
+
