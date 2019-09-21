@@ -91,7 +91,7 @@ def get_city(office):
 
 
 
-def first_clean_good_companies(df):
+def clean_good_companies(df):
     #get the data from Mongo db and start a first filtering:
     df = expand_dataframe_by_offices(df)
     df['raised'] = df.funding_rounds.apply(get_amouts_raised)
@@ -106,6 +106,9 @@ def first_clean_good_companies(df):
     df['longitude'] = df.offices.apply(get_lon)
     df['latitude'] = df.offices.apply(get_lat)
     return df
+
+def clean_bad_companies(df):
+    pass
 
 def get_lisf_of_cities(df):
     subdf = df.groupby(['City']).agg({'name':"count"}) 

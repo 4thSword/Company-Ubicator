@@ -5,7 +5,7 @@ from menu import main_menu
 #main function definition:
 def main():
      db = database_connection()
-     main_menu()
+     main_menu(db)
 
 
 # start app exccuttion

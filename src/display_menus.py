@@ -1,7 +1,7 @@
 
 def print_cities(lst):
-for i in enumerates(lst):
-    return '{}.- {}'format(i[0],i[1])
+    for i in enumerates(lst):
+        yield '{}.- {}'.format(i[0],i[1])
 
 def display_main_menu(goodcities,badcities):
     print('''
