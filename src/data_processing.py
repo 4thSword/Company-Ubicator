@@ -108,6 +108,7 @@ def clean_good_companies(df):
     return df
 
 def clean_bad_companies(df):
+    #get the data from Mongo db and start a first filtering:
     df = expand_dataframe_by_offices(df)
     df = df[['name','offices']]
     df = drop_nulloffices(df)
@@ -124,16 +125,8 @@ def get_lisf_of_cities(df):
     return list(subdf.index)[:6] 
 
 
-'''
-def enrich_df(df):
-    df = expand_dataframe_by_offices(df)
-    df = drop_nulloffices(df)
-    df['City'] = df.offices.apply(get_city)
-    df['geo'] = df.offices.apply(geopoint)
-    df['longitude'] = df.offices.apply(get_lon)
-    df['latitude'] = df.offices.apply(get_lat)
-    df['raised'] = df.funding_rounds.apply(get_amouts_raised)
-    df.raised.apply(drop_Raised_nones)
-    df['total_raised'] = df.Raised.apply(create_total_raised)
-    return df[['name',]]'''
-
+def filter_df_by_city(df,city):
+    #given a city, filters our dataframe:
+    subdf = df[df['City']== city]
+    subdf = subdf[np.isfinite(subdf['longitude'])]
+    return subdf

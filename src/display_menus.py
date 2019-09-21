@@ -21,14 +21,15 @@ def display_main_menu(goodcities,badcities):
 
     ----------------------------------------------------------------------------------------------
 
-    Following the next criteria theese are the most significant cities to place your company:
+    Following the next criteria: 
     
-    Criteria:
 
     1.- Tech companies that raises at least $1M.
     2.- Far from Videogames companies with at least 10 years.
-    2.- With colse acces to Starbucks
+    2.- With close acces to Starbucks
     3.- Getting access to Design meetups
+
+    Theese are the most significant cities to place your company:
     ''')
     input("Press a key to show the cities list according your filters")
     clear()
@@ -47,3 +48,14 @@ def display_main_menu(goodcities,badcities):
     '''.format(print_cities(goodcities),print_cities(badcities))
     )
 
+def display_second_menu(recommended_citites):
+    clear()
+    print('''
+    ----------------------------------------------------------------------------------------------
+    - The cities Recommended to agree your developers and avoid bussiness competition:           -
+    ----------------------------------------------------------------------------------------------
+
+        {}
+    
+    '''.format(print_cities(recommended_citites))
+    )
