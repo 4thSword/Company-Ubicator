@@ -1,4 +1,9 @@
 
+from os import system
+
+def clear():
+    _ = system('clear')
+
 def print_cities(lst):
     lista = ''''''
     for i in enumerate(lst):
@@ -6,6 +11,7 @@ def print_cities(lst):
     return lista
 
 def display_main_menu(goodcities,badcities):
+    clear()
     print('''
     ----------------------------------------------------------------------------------------------
     -  COMPANY UBICATOR                                                                          -
@@ -23,7 +29,10 @@ def display_main_menu(goodcities,badcities):
     2.- Far from Videogames companies with at least 10 years.
     2.- With colse acces to Starbucks
     3.- Getting access to Design meetups
-    
+    ''')
+    input("Press a key to show the cities list according your filters")
+    clear()
+    print('''
     ----------------------------------------------------------------------------------------------
     - The cities with more Tech companies that raised more than 1M dollar are :                  -
     ----------------------------------------------------------------------------------------------
