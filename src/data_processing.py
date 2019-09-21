@@ -70,7 +70,9 @@ def get_city(office):
 
 def enrich_df(df):
     df['City'] = dfq.offices.apply(get_city)
-    df['geo']= df.offices.apply(geopoint)
-    df['Raised']=df.funding_rounds.apply(get_amouts_raised)
+    df['geo'] = df.offices.apply(geopoint)
+    df['longitude'] = df.offices.apply(get_lon)
+    df['latitude'] = df.offices.apply(get_lat)
+    df['Raised'] = df.funding_rounds.apply(get_amouts_raised)
 
     return df

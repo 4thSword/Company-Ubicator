@@ -7,7 +7,7 @@ import pandas as pd
 def main():
      db = database_connection()
      devreq = get_developers_request(db)
-     print(devreq.head())
+     main_menu()
 
 # start app exccuttion
 if __name__ == "__main__":
