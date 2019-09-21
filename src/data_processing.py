@@ -108,7 +108,15 @@ def clean_good_companies(df):
     return df
 
 def clean_bad_companies(df):
-    pass
+    df = expand_dataframe_by_offices(df)
+    df = df[['name','offices']]
+    df = drop_nulloffices(df)
+    df['City'] = df.offices.apply(get_city)
+    df = df[df['City']!= ""]
+    df['geo'] = df.offices.apply(geopoint)
+    df['longitude'] = df.offices.apply(get_lon)
+    df['latitude'] = df.offices.apply(get_lat)
+    return df
 
 def get_lisf_of_cities(df):
     subdf = df.groupby(['City']).agg({'name':"count"}) 

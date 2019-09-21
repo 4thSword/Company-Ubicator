@@ -9,5 +9,6 @@ def main_menu(db):
 
     bad = get_bad_comapnies(db)
     bad = clean_bad_companies(bad)
-    bad_countries = []#get_lisf_of_cities(bad)
+    bad_countries = get_lisf_of_cities(bad)
+    
     display_main_menu(dev_countries,bad_countries)
