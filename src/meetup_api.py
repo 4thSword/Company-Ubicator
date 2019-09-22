@@ -1,4 +1,6 @@
 import requests
+import numpy as np
+import pandas as pd
 import dotenv 
 import os
 dotenv.load_dotenv()
@@ -6,8 +8,34 @@ dotenv.load_dotenv()
 
 meetup_token = os.getenv("MEETUP_KEY")
 
-def getAuth(lon,lat, headers={"KEY={}=True".format(meetup_token)}):
-    baseUrl = "https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public&lon={}}&page=20&radius=10&lat={}}".format(lon,lat)
+def getAuth(lon,lat):
+    baseUrl = "https://api.meetup.com/find/upcoming_events?&key={}&sign=true&photo-host=public&lon={}&page=500&radius=10&lat={}".format(meetup_token,lon,lat)
     print("Asking {}".format(baseUrl))
-    res = requests.get(baseUrl, headers=headers)
-    return res.json()
+    res = requests.get(baseUrl)
+    response = res.json()
+    return pd.DataFrame(response['events'])
+
+def meetup_lat(venue):
+    try:
+        return venue.get('lat')
+    except:
+        return None
+        
+def meetup_lon(venue):
+    try:
+        return venue.get('lon')
+    except:
+        return None
+
+def meetup_public(group):
+    try:
+        return group.get('who')
+    except:
+        return None
+
+def meetup_cleaning(df):
+    df['latitude']= df.venue.apply(meetup_lat)
+    df['longitude']= df.venue.apply(meetup_lon)
+    df['public']= df.group.apply(meetup_public)
+    df = df[np.isfinite(df['longitude'])]
+    return df

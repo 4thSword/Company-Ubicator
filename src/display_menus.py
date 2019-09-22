@@ -26,7 +26,6 @@ def display_main_menu(goodcities,badcities):
 
     1.- Tech companies that raises at least $1M.
     2.- Far from Videogames companies with at least 10 years.
-    2.- With close acces to Starbucks
     3.- Getting access to Design meetups
 
     Theese are the most significant cities to place your company:
