@@ -2,6 +2,7 @@
 from pymongo import MongoClient
 import pandas as pd
 import re
+import numpy as np
 
 # Functios Definitions
 
@@ -97,7 +98,7 @@ def clean_good_companies(df):
     df['raised'] = df.funding_rounds.apply(get_amouts_raised)
     df.raised.apply(drop_Raised_nones)
     df['total_raised'] = df.raised.apply(create_total_raised)
-    df = df[df['total_raised']>= 1000000]
+    df = df[df['total_raised']>= 900000]
     df = df[['name','category_code','total_raised','offices']]
     df = drop_nulloffices(df)
     df['City'] = df.offices.apply(get_city)
