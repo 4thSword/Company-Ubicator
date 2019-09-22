@@ -17,7 +17,7 @@ def main_menu(db):
     recomended_cities = list(set(dev_cities).difference(set(bad_cities)))
     
     display_second_menu(recomended_cities)
-    selected_city = input('Plese choose one of suggested cities:')
+    selected_city = input('     Plese choose one of suggested cities:')
     
     companies = filter_df_by_city(dev,recomended_cities[int(selected_city)])
     print_map(companies)

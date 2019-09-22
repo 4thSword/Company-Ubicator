@@ -31,7 +31,7 @@ def display_main_menu(goodcities,badcities):
 
     Theese are the most significant cities to place your company:
     ''')
-    input("Press a key to show the cities list according your filters")
+    input("     Press a key to show the cities list according your filters")
     clear()
     print('''
     ----------------------------------------------------------------------------------------------

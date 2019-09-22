@@ -13,8 +13,18 @@ def database_connection():
 
 def get_developers_request(db):
     # Returns a dataframe with all the companies that have "Tech" in tags
-    regx = re.compile('\^?tech\w?',re.IGNORECASE)
-    devreq = db.companies.find({"tag_list" : regx})
+    devreq = db.companies.find({"$or": [
+            {"category_code": "design" } ,
+            {"category_code": "web" } , 
+            {"category_code": "software" } , 
+            {"category_code": "games_video" } , 
+            {"category_code": "mobile" } , 
+            {"category_code": "enterprise" } ,   
+            {"category_code": "analytics" } ,
+            {'category_code': "search"},
+            {'category_code': "network_hosting"} ,   
+            {"category_code": "photo_video" } ,   
+            ]})
     return pd.DataFrame(devreq)
 
 def get_bad_comapnies(db):
