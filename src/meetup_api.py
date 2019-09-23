@@ -9,7 +9,7 @@ dotenv.load_dotenv()
 meetup_token = os.getenv("MEETUP_KEY")
 
 def getAuth(lon,lat):
-    baseUrl = "https://api.meetup.com/find/upcoming_events?&key={}&sign=true&photo-host=public&lon={}&page=500&radius=7&lat={}".format(meetup_token,lon,lat)
+    baseUrl = "https://api.meetup.com/find/upcoming_events?&key={}&sign=true&photo-host=public&lon={}&topic_category=design&page=500&radius=7&lat={}".format(meetup_token,lon,lat)
     print("Getting iformation from Meetups in the area... Please Wait")
     res = requests.get(baseUrl)
     response = res.json()
