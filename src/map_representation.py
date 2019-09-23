@@ -19,9 +19,7 @@ def print_map(subdf):
                         icon=folium.Icon(icon='cloud'), # Icono nube, hay más en la documentación
                         fill_color="#F35C50",
                        ).add_to(heatmap)
-    try:
-        _ = system('mkdir ../output')
-    except:
+    
         pass
     heatmap.save('../output/map_ubication.html')
     _ = system('firefox ../output/map_ubication.html')
